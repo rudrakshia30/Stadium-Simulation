@@ -1,0 +1,21 @@
+{
+  "name": "crowdsphere-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CrowdSphere AI — Intelligent matchday command system for safer stadiums and better fan experiences.",
+  "workspaces": ["server", "client"],
+  "scripts": {
+    "dev": "start /B npm run dev --workspace=server && npm run dev --workspace=client",
+    "dev:server": "npm run dev --workspace=server",
+    "dev:client": "npm run dev --workspace=client",
+    "install:all": "npm install --workspace=server && npm install --workspace=client",
+    "test": "npm run test --workspace=server",
+    "test:coverage": "npm run test:coverage --workspace=server",
+    "lint": "npm run lint --workspace=server && npm run lint --workspace=client",
+    "build:client": "npm run build --workspace=client"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  }
+}
