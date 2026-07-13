@@ -1,0 +1,65 @@
+name: CrowdSphere AI CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Build, Lint, Test & Verify
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+        env:
+          NODE_ENV: test
+          JWT_SECRET: ci-test-jwt-secret-minimum-32-chars-long
+          OPS_ACCESS_CODE: ci-test-ops-code
+          GEMINI_API_KEY: ''
+          CLIENT_ORIGIN: http://localhost:5173
+          PORT: 8080
+
+      - name: Build production bundle
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Check repository size
+        run: npm run check:size
+
+      - name: Run verification script
+        run: npm run verify
+        env:
+          NODE_ENV: ci
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: |
+            server/coverage/
+            client/coverage/
+          retention-days: 7
