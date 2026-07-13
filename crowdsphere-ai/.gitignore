@@ -1,0 +1,44 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+
+# Test coverage
+coverage/
+**/coverage/
+.nyc_output/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Cache
+.eslintcache
+.prettiercache
+**/.cache/
+
+# Temporary
+tmp/
+temp/
+
+# Generated
+*.tsbuildinfo
