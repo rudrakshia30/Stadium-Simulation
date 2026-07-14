@@ -51,7 +51,7 @@ export async function login(req, res, next) {
 
     res.cookie('ops_token', token, {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: config.isProduction ? 'none' : 'strict',
       secure: config.isProduction,
       maxAge: 15 * 60 * 1000, // 15 minutes
     });
@@ -72,7 +72,11 @@ export async function login(req, res, next) {
  * POST /api/ops/logout
  */
 export function logout(req, res) {
-  res.clearCookie('ops_token', { httpOnly: true, sameSite: 'strict', secure: config.isProduction });
+  res.clearCookie('ops_token', {
+    httpOnly: true,
+    sameSite: config.isProduction ? 'none' : 'strict',
+    secure: config.isProduction
+  });
   res.json({ success: true, data: { message: 'Logged out successfully' }, requestId: req.id });
 }
 
