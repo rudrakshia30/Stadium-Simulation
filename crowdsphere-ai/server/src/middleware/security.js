@@ -43,7 +43,7 @@ export function applyCors() {
       res.setHeader('Access-Control-Allow-Origin', config.clientOrigin);
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Request-ID');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Request-ID, Authorization');
     }
     if (req.method === 'OPTIONS') {
       res.sendStatus(204);

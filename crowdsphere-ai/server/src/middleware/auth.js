@@ -17,7 +17,11 @@ import { AuthError } from '../utils/errors.js';
  * @param {Function} next
  */
 export function requireAuth(req, res, next) {
-  const token = req.cookies?.ops_token;
+  let token = req.cookies?.ops_token;
+
+  if (!token && req.headers.authorization?.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
   if (!token) {
     return next(new AuthError('Operations access token required'));

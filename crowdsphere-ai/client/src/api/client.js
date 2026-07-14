@@ -55,9 +55,15 @@ async function request(endpoint, options = {}) {
   const timeout = setTimeout(() => controller.abort('timeout'), timeoutMs);
 
   try {
+    const token = localStorage.getItem('ops_token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const fetchOptions = {
       method,
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       credentials: 'include', // Send HttpOnly cookies
       signal: controller.signal,
     };
@@ -134,14 +140,20 @@ export const api = {
   fanChat: (body) =>
     request('/fan/chat', { method: 'POST', body, dedupeKey: 'POST:fan/chat' }),
 
-  /**
-   * POST /api/ops/login
-   * @param {{ accessCode: string }} body
-   */
-  opsLogin: (body) => request('/ops/login', { method: 'POST', body }),
+  opsLogin: async (body) => {
+    const data = await request('/ops/login', { method: 'POST', body });
+    if (data && data.token) {
+      localStorage.setItem('ops_token', data.token);
+    }
+    return data;
+  },
 
   /** POST /api/ops/logout */
-  opsLogout: () => request('/ops/logout', { method: 'POST' }),
+  opsLogout: async () => {
+    const data = await request('/ops/logout', { method: 'POST' });
+    localStorage.removeItem('ops_token');
+    return data;
+  },
 
   /** GET /api/ops/snapshot */
   opsSnapshot: () => request('/ops/snapshot', { dedupeKey: 'GET:ops/snapshot' }),
