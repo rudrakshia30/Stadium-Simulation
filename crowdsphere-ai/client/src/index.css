@@ -1,14 +1,3 @@
-/**
- * CrowdSphere AI — Global Design System
- * 
- * Design principles:
- * - Dark mode first, premium feel
- * - Glassmorphism cards and panels
- * - Purple/violet brand accent with electric teal for data
- * - Micro-animations for all interactive elements
- * - WCAG 2.2 AA compliant contrast ratios
- */
-
 /* ─── Fonts ─────────────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
