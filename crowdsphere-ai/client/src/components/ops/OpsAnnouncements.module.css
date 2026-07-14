@@ -1,0 +1,27 @@
+.page { padding: var(--space-6); height: 100%; overflow-y: auto; }
+.splitView { display: grid; grid-template-columns: 320px 1fr; gap: var(--space-6); align-items: start; }
+.configPanel { position: sticky; top: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.title { font-size: 1.1rem; font-weight: 700; }
+.desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+.form { display: flex; flex-direction: column; gap: var(--space-4); }
+.slider { width: 100%; accent-color: var(--color-brand-primary); cursor: pointer; }
+.sliderLabels { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); }
+.resultPanel { display: flex; flex-direction: column; gap: var(--space-5); }
+.approvalBanner {
+  padding: var(--space-3) var(--space-4); background: var(--color-amber-glow);
+  border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-md);
+  font-size: 0.82rem; color: var(--color-amber); font-weight: 600;
+}
+.result { display: flex; flex-direction: column; gap: var(--space-4); animation: fadeInUp 0.3s ease; }
+.announcementBox { background: var(--color-bg-elevated); border: 1px solid var(--border-medium); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+.announcementMeta { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.announcementText { font-size: 1rem; color: var(--text-primary); line-height: 1.7; font-style: italic; }
+.approvalButtons { display: flex; gap: var(--space-3); }
+.approvedBadge { padding: var(--space-3) var(--space-4); background: var(--color-green-glow); border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius-md); font-size: 0.85rem; color: var(--risk-low); font-weight: 600; text-align: center; }
+.history { display: flex; flex-direction: column; gap: var(--space-3); }
+.historyTitle { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.historyItem { padding: var(--space-3) var(--space-4) !important; display: flex; flex-direction: column; gap: var(--space-2); }
+.historyMeta { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.historyTime { font-size: 0.72rem; color: var(--text-muted); margin-left: auto; }
+.historyText { font-size: 0.82rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+@media (max-width: 900px) { .splitView { grid-template-columns: 1fr; } .configPanel { position: static; } .page { padding: var(--space-4); } }
