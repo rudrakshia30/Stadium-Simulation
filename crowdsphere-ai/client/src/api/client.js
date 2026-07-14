@@ -6,7 +6,7 @@
  * @module api/client
  */
 
-const BASE_URL = '/api';
+const BASE_URL = 'https://stadium-simulation.onrender.com/api';
 const DEFAULT_TIMEOUT_MS = 30000;
 
 /** Active abort controllers per endpoint key */
