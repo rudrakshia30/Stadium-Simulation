@@ -1,0 +1,157 @@
+.panel {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  padding: var(--space-6);
+  border-right: 1px solid var(--border-subtle);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  background: var(--color-bg-surface);
+}
+
+.title { font-size: 1.1rem; font-weight: 700; }
+.desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+.activeBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-teal-glow);
+  border: 1px solid rgba(45,212,191,0.3);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  color: var(--color-teal);
+  font-weight: 600;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.optionCard {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+.optionCard:hover {
+  border-color: var(--border-medium);
+  background: var(--color-bg-card);
+}
+.optionCardActive {
+  border-color: var(--color-brand-primary);
+  background: var(--color-brand-glow);
+}
+
+.optionTop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.optionIcon { font-size: 1.2rem; flex-shrink: 0; }
+
+.optionText { flex: 1; }
+.optionLabel { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.optionDesc { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+.toggle {
+  width: 36px;
+  height: 20px;
+  background: var(--color-bg-base);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  position: relative;
+  flex-shrink: 0;
+  transition: background var(--transition-fast);
+}
+.optionCardActive .toggle {
+  background: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  transition: transform var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.toggleThumbOn { transform: translateX(16px); }
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.facilityTitle { font-size: 1.1rem; font-weight: 700; }
+.facilityDesc { font-size: 0.82rem; color: var(--text-muted); }
+
+.facilities {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-3);
+}
+
+.facilityCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4) !important;
+}
+
+.facilityIcon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+.facilityName { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.facilityLocation { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+.emergencyBox {
+  padding: var(--space-5);
+  background: rgba(124,58,237,0.08);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.emergencyTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.emergencyNote {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .panel { flex-direction: column; }
+  .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-subtle); max-height: 60vh; }
+  .main { padding: var(--space-4); }
+  .facilities { grid-template-columns: 1fr; }
+}
