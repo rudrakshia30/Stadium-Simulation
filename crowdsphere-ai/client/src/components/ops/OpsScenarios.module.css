@@ -1,0 +1,22 @@
+.page { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-6); }
+.header { display: flex; flex-direction: column; gap: var(--space-3); }
+.title { font-size: 1.2rem; font-weight: 700; }
+.desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; max-width: 640px; }
+.demoBadge {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-brand-glow); border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full); font-size: 0.8rem; color: var(--color-brand-light); font-weight: 500;
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--space-4); }
+.scenarioCard {
+  display: flex; gap: var(--space-4); align-items: flex-start; padding: var(--space-5) !important;
+  transition: all var(--transition-normal) !important; cursor: default;
+}
+.scenarioCardActive { border-color: var(--color-brand-primary) !important; box-shadow: 0 0 20px var(--color-brand-glow); }
+.scIcon { font-size: 1.8rem; flex-shrink: 0; width: 44px; text-align: center; }
+.scContent { flex: 1; display: flex; flex-direction: column; gap: var(--space-2); }
+.scHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
+.scName { font-size: 0.9rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+.scDesc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+@media (max-width: 768px) { .page { padding: var(--space-4); } .grid { grid-template-columns: 1fr; } }
