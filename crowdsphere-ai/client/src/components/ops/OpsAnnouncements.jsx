@@ -2,6 +2,7 @@
  * Announcement generator component.
  */
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../../api/client.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import styles from './OpsAnnouncements.module.css';
@@ -159,7 +160,7 @@ export default function OpsAnnouncements({ snapshot }) {
                   <span className="tag">{result.characterCount} chars</span>
                 </div>
                 <p className={styles.announcementText}>
-                  "{result.announcement}"
+                  &quot;{result.announcement}&quot;
                 </p>
               </div>
 
@@ -192,7 +193,7 @@ export default function OpsAnnouncements({ snapshot }) {
                     <span className="tag">{h.tone}</span>
                     <span className={styles.historyTime}>{new Date(h.approvedAt).toLocaleTimeString()}</span>
                   </div>
-                  <p className={styles.historyText}>"{h.announcement}"</p>
+                  <p className={styles.historyText}>&quot;{h.announcement}&quot;</p>
                 </div>
               ))}
             </div>
@@ -202,3 +203,17 @@ export default function OpsAnnouncements({ snapshot }) {
     </div>
   );
 }
+
+OpsAnnouncements.propTypes = {
+  snapshot: PropTypes.shape({
+    crowd: PropTypes.shape({
+      incidents: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        type: PropTypes.string,
+        severity: PropTypes.string,
+        zone: PropTypes.string,
+        status: PropTypes.string,
+      })),
+    }),
+  }),
+};
