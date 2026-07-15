@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './NavBar.module.css';
 
 export default function NavBar({ activeView, onViewChange }) {
@@ -50,3 +51,8 @@ export default function NavBar({ activeView, onViewChange }) {
     </nav>
   );
 }
+
+NavBar.propTypes = {
+  activeView: PropTypes.string.isRequired,
+  onViewChange: PropTypes.func.isRequired,
+};
