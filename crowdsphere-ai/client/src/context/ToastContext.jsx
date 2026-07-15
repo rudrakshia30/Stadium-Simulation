@@ -1,7 +1,8 @@
 /**
  * Toast notification context for the entire app.
  */
-import { createContext, useContext, useState, useCallback, useRef } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 const ToastContext = createContext(null);
 
@@ -32,6 +33,10 @@ export function ToastProvider({ children }) {
     </ToastContext.Provider>
   );
 }
+
+ToastProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export function useToast() {
   const ctx = useContext(ToastContext);
