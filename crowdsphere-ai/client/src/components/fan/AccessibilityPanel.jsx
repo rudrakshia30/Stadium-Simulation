@@ -1,6 +1,7 @@
 /**
  * Accessibility preferences panel.
  */
+import PropTypes from 'prop-types';
 import styles from './AccessibilityPanel.module.css';
 
 const PREF_OPTIONS = [
@@ -113,3 +114,8 @@ export default function AccessibilityPanel({ preferences, onPreferencesChange })
     </div>
   );
 }
+
+AccessibilityPanel.propTypes = {
+  preferences: PropTypes.object.isRequired,
+  onPreferencesChange: PropTypes.func.isRequired,
+};
