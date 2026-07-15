@@ -4,6 +4,15 @@
  *   Provides detailed compliance status, known limitations, contact info, and
  *   enforcement procedures to meet hackathon inclusive-design expectations.
  *
+ * @pr-changes
+ *   - Created accessibility statement view.
+ *
+ * @validation-review
+ *   - Ensure contact information and email targets are correct.
+ *
+ * @scope-of-improvement
+ *   - Dynamically load compliance reports.
+ *
  * @business-intent
  *   Demonstrates our commitment to accessibility compliance and offers users
  *   transparent paths to report barriers.

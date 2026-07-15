@@ -1,3 +1,20 @@
+/**
+ * @module test/LandingPage.test
+ * @description Landing page unit tests for the CrowdSphere AI client.
+ *
+ * @pr-changes
+ *   - Added basic testing configuration for landing page components.
+ *
+ * @validation-review
+ *   - Verifies rendering of title and subtitle.
+ *
+ * @scope-of-improvement
+ *   - Add visual snapshot tests.
+ *
+ * @business-intent
+ *   Ensures landing page correctness and visual placement checks.
+ */
+
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';

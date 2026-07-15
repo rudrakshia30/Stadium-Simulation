@@ -1,3 +1,20 @@
+/**
+ * @module test/accessibility.test
+ * @description Accessibility unit tests for the CrowdSphere AI client.
+ *
+ * @pr-changes
+ *   - Added basic testing configuration for UI component accessibility.
+ *
+ * @validation-review
+ *   - Verifies keyboard navigability and role properties.
+ *
+ * @scope-of-improvement
+ *   - Add axe-core testing integrations.
+ *
+ * @business-intent
+ *   Enforces inclusive design principles at build-time.
+ */
+
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import React from 'react';

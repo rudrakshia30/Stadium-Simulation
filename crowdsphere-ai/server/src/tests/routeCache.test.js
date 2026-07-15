@@ -1,7 +1,7 @@
 /**
  * Unit tests for the RouteCache.
  */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { RouteCache } from '../tools/routeCache.js';
 
 describe('RouteCache', () => {

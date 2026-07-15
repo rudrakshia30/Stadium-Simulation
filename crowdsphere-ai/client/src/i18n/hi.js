@@ -1,3 +1,21 @@
+/**
+ * @module i18n/hi
+ * @description Hindi translations dictionary for CrowdSphere AI.
+ *   Provides translation keys for the Fan Companion and Operations Centre.
+ *
+ * @pr-changes
+ *   - None, baseline translation file.
+ *
+ * @validation-review
+ *   - Keys must align exactly with en.js translations.
+ *
+ * @scope-of-improvement
+ *   - None.
+ *
+ * @business-intent
+ *   Hindi language translations reference.
+ */
+
 export default {
   nav: {
     home: 'होम',

@@ -71,7 +71,8 @@ describe('validateFanResponse', () => {
   });
 
   it('should fail with missing required field', () => {
-    const { answer, ...withoutAnswer } = validFanResponse;
+    const withoutAnswer = { ...validFanResponse };
+    delete withoutAnswer.answer;
     const result = validateFanResponse(withoutAnswer);
     expect(result.success).toBe(false);
   });
@@ -114,7 +115,8 @@ describe('validateOpsResponse', () => {
   });
 
   it('should fail with missing executiveSummary', () => {
-    const { executiveSummary, ...without } = validOpsResponse;
+    const without = { ...validOpsResponse };
+    delete without.executiveSummary;
     const result = validateOpsResponse(without);
     expect(result.success).toBe(false);
   });

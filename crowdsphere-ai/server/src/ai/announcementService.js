@@ -60,21 +60,7 @@ import { validateAnnouncementResponse } from './responseValidator.js';
 import { ANNOUNCEMENT_FIXTURE } from './mockFixtures.js';
 import { logger } from '../utils/logger.js';
 
-// #What — Allowlist of accepted audience identifiers; used for input validation.
-// #Business-Intent — Constraining audiences prevents the AI prompt from receiving
-//                    arbitrary free-text that could be used for prompt injection.
-const ALLOWED_AUDIENCES = ['fans', 'volunteers', 'accessibility-staff', 'transport-coordinators', 'security'];
-
-// #What — Allowlist of accepted tone descriptors; mirrors the system instruction enum.
-// #Business-Intent — Tone control is essential for crowd safety: 'urgent' vs
-//                    'reassuring' can have dramatically different crowd behaviour outcomes.
-const ALLOWED_TONES = ['urgent', 'informational', 'reassuring', 'instructional'];
-
-// #What — Allowlist of supported language codes; must stay in sync with Gemini capabilities
-//         and the venue's translation review process.
-// #Uncertain — Arabic (ar) support depends on the model's RTL handling quality;
-//              monitor for formatting issues in production.
-const ALLOWED_LANGUAGES = ['en', 'hi', 'es', 'fr', 'ar'];
+// #What — Allowlists for audience, tone, and language are enforced via validators/opsRequestSchema.js.
 
 /**
  * Generate a multilingual, audience-specific venue announcement draft using Gemini AI.

@@ -9,7 +9,7 @@ import app from '../app.js';
 import { setGeminiClient as setFanClient } from '../controllers/fanController.js';
 import { setGeminiClient as setOpsClient } from '../controllers/opsController.js';
 import { resetState } from '../data/operationsState.js';
-import { FAN_FIXTURE, OPS_BRIEF_FIXTURE, ANNOUNCEMENT_FIXTURE } from '../ai/mockFixtures.js';
+
 
 // Mock Gemini client — never calls real API
 const mockGeminiClient = {

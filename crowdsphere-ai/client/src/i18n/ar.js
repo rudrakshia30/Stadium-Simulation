@@ -3,6 +3,15 @@
  * @description Arabic translations dictionary for CrowdSphere AI.
  *   Provides RTL translation keys for the Fan Companion and Operations Centre.
  *
+ * @pr-changes
+ *   - Created Arabic localization bundle for CrowdSphere AI.
+ *
+ * @validation-review
+ *   - Keys must align exactly with en.js translations.
+ *
+ * @scope-of-improvement
+ *   - Add translation helper variables.
+ *
  * @business-intent
  *   Ensures accessibility compliance for Arabic-speaking visitors and staff.
  */

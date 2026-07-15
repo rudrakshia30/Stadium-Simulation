@@ -169,11 +169,13 @@ export class PriorityQueue {
    */
   _sinkDown(i) {
     const n = this._heap.length;
-    while (true) {
-      let smallest = i;
+    let index = i;
+    let shouldContinue = true;
+    while (shouldContinue) {
+      let smallest = index;
       // #What — compute left and right child indices in zero-indexed binary heap
-      const left = 2 * i + 1;
-      const right = 2 * i + 2;
+      const left = 2 * index + 1;
+      const right = 2 * index + 2;
 
       // #What — check if left child exists and has a lower priority than current smallest
       if (left < n && this._heap[left].priority < this._heap[smallest].priority) smallest = left;
@@ -182,11 +184,13 @@ export class PriorityQueue {
       if (right < n && this._heap[right].priority < this._heap[smallest].priority) smallest = right;
 
       // #What — if current node is already the smallest, heap property is restored; exit
-      if (smallest === i) break;
-
-      // #What — swap current node with the smaller child and continue sinking
-      [this._heap[smallest], this._heap[i]] = [this._heap[i], this._heap[smallest]];
-      i = smallest;
+      if (smallest === index) {
+        shouldContinue = false;
+      } else {
+        // #What — swap current node with the smaller child and continue sinking
+        [this._heap[smallest], this._heap[index]] = [this._heap[index], this._heap[smallest]];
+        index = smallest;
+      }
     }
   }
 }

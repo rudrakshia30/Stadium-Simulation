@@ -4,6 +4,15 @@
  *   API registry, and AI client factories. Designed to push test coverage well
  *   above the vitest/coverage thresholds.
  *
+ * @pr-changes
+ *   - Added extensive test coverage for secondary helpers and registry execution.
+ *
+ * @validation-review
+ *   - Validates that mock parameters are type safe.
+ *
+ * @scope-of-improvement
+ *   - Add property-based testing.
+ *
  * @business-intent
  *   Validates that all support modules, routing utilities, and secondary tools
  *   perform correctly across all edge cases (missing keys, unknown IDs, invalid enums).

@@ -56,8 +56,9 @@ describe('PriorityQueue', () => {
     let lastCost = -Infinity;
     for (const item of items.sort((a, b) => a.cost - b.cost)) {
       const popped = pq.pop();
-      expect(popped).toBeDefined();
-      // Each pop should be in order
+      expect(popped).toBe(item.id);
+      expect(item.cost).toBeGreaterThanOrEqual(lastCost);
+      lastCost = item.cost;
     }
     expect(pq.isEmpty()).toBe(true);
   });

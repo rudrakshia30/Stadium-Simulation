@@ -3,6 +3,15 @@
  * @description Spanish translations dictionary for CrowdSphere AI.
  *   Provides translations for the Fan Companion and Operations Centre.
  *
+ * @pr-changes
+ *   - Created Spanish localization bundle for CrowdSphere AI.
+ *
+ * @validation-review
+ *   - Keys must align exactly with en.js translations.
+ *
+ * @scope-of-improvement
+ *   - Add translation helper variables.
+ *
  * @business-intent
  *   Ensures accessibility compliance for Spanish-speaking spectators and staff.
  */

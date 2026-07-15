@@ -1,3 +1,21 @@
+/**
+ * @module i18n/en
+ * @description English translations dictionary for CrowdSphere AI.
+ *   Provides translation keys for the Fan Companion and Operations Centre.
+ *
+ * @pr-changes
+ *   - None, baseline translation file.
+ *
+ * @validation-review
+ *   - Keys act as the reference schema for all other translations.
+ *
+ * @scope-of-improvement
+ *   - None.
+ *
+ * @business-intent
+ *   English language translations reference.
+ */
+
 export default {
   nav: {
     home: 'Home',

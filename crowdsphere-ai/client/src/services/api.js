@@ -12,6 +12,9 @@
  * @validation-review
  *   - Simple relative import. Ensure `client.js` remains the single source of truth.
  *
+ * @scope-of-improvement
+ *   - None required, thin adapter wrapper.
+ *
  * @business-intent
  *   Preserves clean routing and client-side access control boundaries.
  */
