@@ -2,9 +2,8 @@
  * Fan Page — complete fan experience interface
  * Includes: AI chat, venue map, route finder, language selector, accessibility options
  */
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { api } from '../api/client.js';
-import { useToast } from '../context/ToastContext.jsx';
 import VenueMap from '../components/fan/VenueMap.jsx';
 import ChatWindow from '../components/fan/ChatWindow.jsx';
 import RoutePanel from '../components/fan/RoutePanel.jsx';
@@ -20,7 +19,6 @@ const LANGUAGES = [
 ];
 
 export default function FanPage() {
-  const toast = useToast();
   const [activeTab, setActiveTab] = useState('chat');
   const [language, setLanguage] = useState('en');
   const [preferences, setPreferences] = useState({
