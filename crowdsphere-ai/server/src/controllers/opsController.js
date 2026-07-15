@@ -60,7 +60,7 @@ export async function login(req, res, next) {
 
     res.json({
       success: true,
-      data: { role: 'operations', expiresIn: config.jwtExpiresIn },
+      data: { token, role: 'operations', expiresIn: config.jwtExpiresIn },
       requestId: req.id,
     });
   } catch (err) {
