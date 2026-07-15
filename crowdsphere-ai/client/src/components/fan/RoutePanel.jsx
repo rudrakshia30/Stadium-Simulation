@@ -2,6 +2,7 @@
  * Route Finder panel — deterministic route calculation with step-by-step directions.
  */
 import { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../../api/client.js';
 import styles from './RoutePanel.module.css';
 
@@ -25,17 +26,6 @@ export default function RoutePanel({ initialRoute, preferences, venueData }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (initialRoute?.from) setFrom(initialRoute.from);
-    if (initialRoute?.to) setTo(initialRoute.to);
-  }, [initialRoute]);
-
-  useEffect(() => {
-    if (initialRoute?.from && initialRoute?.to) {
-      calculateRoute(initialRoute.from, initialRoute.to);
-    }
-  }, [initialRoute]);
-
   const calculateRoute = useCallback(async (fromNode, toNode) => {
     if (!fromNode || !toNode) return;
     setLoading(true);
@@ -54,6 +44,17 @@ export default function RoutePanel({ initialRoute, preferences, venueData }) {
       setLoading(false);
     }
   }, [preferences]);
+
+  useEffect(() => {
+    if (initialRoute?.from) setFrom(initialRoute.from);
+    if (initialRoute?.to) setTo(initialRoute.to);
+  }, [initialRoute]);
+
+  useEffect(() => {
+    if (initialRoute?.from && initialRoute?.to) {
+      calculateRoute(initialRoute.from, initialRoute.to);
+    }
+  }, [initialRoute, calculateRoute]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -260,3 +261,14 @@ export default function RoutePanel({ initialRoute, preferences, venueData }) {
     </div>
   );
 }
+
+RoutePanel.propTypes = {
+  initialRoute: PropTypes.shape({
+    from: PropTypes.string,
+    to: PropTypes.string,
+  }),
+  preferences: PropTypes.object,
+  venueData: PropTypes.shape({
+    nodes: PropTypes.arrayOf(PropTypes.string),
+  }),
+};
