@@ -52,10 +52,8 @@
  *   could degrade the crowd-safety response loop during a live event.
  */
 
-// #What — Absolute base URL for all backend API calls; must match the deployed server origin.
-// #Risk-Area — Hard-coding the production URL here means staging / local dev environments
-//              must rely on env-var injection or a build-time replace step.
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
+const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const BASE_URL = import.meta.env.VITE_API_URL || (isLocal ? 'http://localhost:8080/api' : 'https://stadium-simulation.onrender.com/api');
 
 // #What — Default per-request timeout in milliseconds before the AbortController fires.
 // #Business-Intent — 30 s balances user patience against server LLM generation time for
