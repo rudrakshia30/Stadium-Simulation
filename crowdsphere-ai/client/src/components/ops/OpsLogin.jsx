@@ -41,7 +41,6 @@ export default function OpsLogin() {
               onChange={(e) => setCode(e.target.value)}
               placeholder="Enter operations access code"
               autoComplete="current-password"
-              autoFocus
               required
               aria-required="true"
               aria-describedby={error ? 'login-error' : 'login-hint'}
