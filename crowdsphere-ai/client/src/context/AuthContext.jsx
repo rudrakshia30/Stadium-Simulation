@@ -2,6 +2,7 @@
  * Auth context for operations access management.
  */
 import { createContext, useContext, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../api/client.js';
 
 const AuthContext = createContext(null);
@@ -42,6 +43,10 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
