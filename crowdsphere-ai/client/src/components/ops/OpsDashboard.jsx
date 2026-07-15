@@ -1,6 +1,7 @@
 /**
  * Operations Dashboard — real-time venue metrics, zone cards, and incident list.
  */
+import PropTypes from 'prop-types';
 import styles from './OpsDashboard.module.css';
 
 const DENSITY_COLOR = {
@@ -26,6 +27,15 @@ function MetricCard({ icon, label, value, sub, color, alert }) {
     </div>
   );
 }
+
+MetricCard.propTypes = {
+  icon: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  sub: PropTypes.string,
+  color: PropTypes.string,
+  alert: PropTypes.bool,
+};
 
 function ZoneCard({ zone }) {
   const pct = zone.occupancyPct;
@@ -62,6 +72,17 @@ function ZoneCard({ zone }) {
   );
 }
 
+ZoneCard.propTypes = {
+  zone: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    occupancyPct: PropTypes.number,
+    densityLevel: PropTypes.string,
+    queueMinutes: PropTypes.number,
+    accessibilityObstruction: PropTypes.bool,
+  }).isRequired,
+};
+
 function IncidentCard({ incident }) {
   const severityColor = {
     low: 'var(--risk-low)', moderate: 'var(--risk-moderate)',
@@ -85,6 +106,19 @@ function IncidentCard({ incident }) {
   );
 }
 
+IncidentCard.propTypes = {
+  incident: PropTypes.shape({
+    id: PropTypes.string,
+    type: PropTypes.string,
+    severity: PropTypes.string,
+    zone: PropTypes.string,
+    description: PropTypes.string,
+    requiredRole: PropTypes.string,
+    humanVerified: PropTypes.bool,
+    status: PropTypes.string,
+  }).isRequired,
+};
+
 function TransportCard({ transport }) {
   const isDisrupted = transport.status !== 'operational';
   return (
@@ -106,6 +140,17 @@ function TransportCard({ transport }) {
     </div>
   );
 }
+
+TransportCard.propTypes = {
+  transport: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    status: PropTypes.string,
+    nextDeparture: PropTypes.string,
+    frequency: PropTypes.number,
+    notes: PropTypes.string,
+  }).isRequired,
+};
 
 export default function OpsDashboard({ snapshot, loading }) {
   if (loading && !snapshot) {
@@ -204,3 +249,25 @@ export default function OpsDashboard({ snapshot, loading }) {
     </div>
   );
 }
+
+OpsDashboard.propTypes = {
+  snapshot: PropTypes.shape({
+    metrics: PropTypes.shape({
+      stadiumOccupancyPct: PropTypes.number,
+      overallRisk: PropTypes.string,
+      overallRiskScore: PropTypes.number,
+      activeIncidentCount: PropTypes.number,
+      longestQueueMinutes: PropTypes.number,
+      availableVolunteers: PropTypes.number,
+      volunteerShortage: PropTypes.bool,
+      accessibilityDisruptions: PropTypes.number,
+      elevatorOutages: PropTypes.arrayOf(PropTypes.string),
+    }),
+    crowd: PropTypes.shape({
+      zones: PropTypes.arrayOf(PropTypes.object),
+      incidents: PropTypes.arrayOf(PropTypes.object),
+    }),
+    transport: PropTypes.arrayOf(PropTypes.object),
+  }),
+  loading: PropTypes.bool,
+};
