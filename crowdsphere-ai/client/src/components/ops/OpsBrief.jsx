@@ -4,6 +4,7 @@
  * ALWAYS renders humanApprovalRequired banner.
  */
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../../api/client.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import styles from './OpsBrief.module.css';
@@ -67,6 +68,20 @@ function PriorityCard({ priority }) {
     </div>
   );
 }
+
+PriorityCard.propTypes = {
+  priority: PropTypes.shape({
+    rank: PropTypes.number,
+    title: PropTypes.string,
+    severity: PropTypes.string,
+    targetResponseMinutes: PropTypes.number,
+    responsibleRole: PropTypes.string,
+    rationale: PropTypes.string,
+    verifiedEvidence: PropTypes.arrayOf(PropTypes.string),
+    recommendedActions: PropTypes.arrayOf(PropTypes.string),
+    affectedZones: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+};
 
 export default function OpsBrief({ snapshot }) {
   const toast = useToast();
@@ -178,7 +193,7 @@ export default function OpsBrief({ snapshot }) {
             <h3 className={styles.sectionTitle}>📢 Suggested Fan Communication</h3>
             <div className={styles.fanCommMessage}>
               <div className={styles.fanCommLang}>Language: {brief.fanCommunication?.language}</div>
-              <p className={styles.fanCommText}>"{brief.fanCommunication?.message}"</p>
+              <p className={styles.fanCommText}>&quot;{brief.fanCommunication?.message}&quot;</p>
             </div>
             <div className={styles.approvalRequired} role="note">
               ⚠ This message requires approval and editing before broadcast.
@@ -213,9 +228,15 @@ export default function OpsBrief({ snapshot }) {
         <div className="empty-state">
           <div className="empty-state__icon">⚡</div>
           <div className="empty-state__title">No brief generated yet</div>
-          <p>Click "Generate Brief" to ask Gemini to analyze the current venue state and produce a prioritized operations brief.</p>
+          <p>Click &quot;Generate Brief&quot; to ask Gemini to analyze the current venue state and produce a prioritized operations brief.</p>
         </div>
       )}
     </div>
   );
 }
+
+OpsBrief.propTypes = {
+  snapshot: PropTypes.shape({
+    geminiAvailable: PropTypes.bool,
+  }),
+};
