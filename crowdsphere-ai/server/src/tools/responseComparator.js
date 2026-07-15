@@ -1,24 +1,73 @@
 /**
- * Response option comparator for Unity Arena incidents.
- * Provides deterministic trade-off analysis for response choices.
- *
  * @module tools/responseComparator
+ * @description Response option comparator tool for Unity Arena incidents.
+ *   Provides a deterministic trade-off analysis for response options based on
+ *   active incident details, the matching response playbook, and local volunteer
+ *   availability. Gemini may request this comparison to help operations staff
+ *   evaluate options, but the options and trade-offs are generated deterministically
+ *   by this module, never hallucinated by the AI model.
+ *
+ * @pr-changes
+ *   - Implemented three comparison options: full-immediate, staged-response, and
+ *     monitor-await-escalation.
+ *   - Integrated `getVolunteerAvailability()` to dynamically assess whether local
+ *     volunteer shortages exist in the affected zone and list it as a con.
+ *   - Restructured return values to satisfy Zod schemas and UI requirements.
+ *   - Set `humanApprovalRequired: true` on all generated options to enforce the
+ *     review process.
+ *
+ * @validation-review
+ *   - `incidentId` is matched against the incidents array; if not found, returns
+ *     a single safe 'monitor' option instead of throwing.
+ *   - `volunteers.zones` lookup handles cases where the incident zone is not found in
+ *     the volunteer tracker baseline.
+ *   - Playbook resolution time is incremented by 8 minutes in the staged-response
+ *     option as a realistic overhead penalty.
+ *   - `humanApprovalRequired` is explicitly injected into all options returned.
+ *
+ * @scope-of-improvement
+ *   - Support dynamic resource requirements that query actual volunteer lists
+ *     rather than playbook role strings.
+ *   - Allow customization of options and pros/cons via operations state.
+ *   - Add numeric cost estimations (token consumption, staff overhead) for each option.
+ *
+ * @business-intent
+ *   Helps operations managers perform structured decision-making during incidents by
+ *   presenting clear trade-offs, preventing hasty deployments that could exhaust
+ *   resources needed elsewhere in the venue.
  */
 
 import { getIncidentPlaybook } from './incidentPlaybook.js';
 import { getVolunteerAvailability } from './volunteerTracker.js';
 
 /**
- * Compare available response options for an active incident.
+ * Compare available response options for an active incident and return trade-offs.
  *
- * @param {string} incidentId
- * @param {{ zones: Array<Object>, incidents: Array<Object> }} crowdState
- * @returns {Array<Object>} Ordered response options with trade-offs
+ * @description Analyzes the active incident against the safety playbook and volunteer
+ *   tracker, composing up to three options:
+ *   1. Full Immediate Response: Deploy all recommended roles immediately.
+ *   2. Staged Response: Deploy assessor first, then commit.
+ *   3. Monitor and Observe: Await escalation (only for non-critical incidents).
+ *
+ * @param {string} incidentId - Active incident ID to compare options for.
+ * @param {{ zones: Array<Object>, incidents: Array<Object> }} crowdState - Current crowd state.
+ * @returns {Array<Object>} List of response options with pros, cons, and metadata.
+ *
+ * @risk-area
+ *   If the playbook does not exist for an incident, the fallback playbook is used,
+ *   which could lead to generic role lists. Operators should be aware of fallbacks.
+ *
+ * @business-intent
+ *   Ensures that every recommended deployment is accompanied by a clear analysis of pros,
+ *   cons, and resource requirements, aiding staff in choosing the safest response.
  */
 export function compareResponseOptions(incidentId, crowdState) {
+  // #What — Find the target incident in the current crowd state snapshot.
   const incident = crowdState.incidents.find((i) => i.id === incidentId);
 
   if (!incident) {
+    // #What — A safe monitor-only fallback if the incident ID is invalid or not active.
+    // #Business-Intent — Prevents server crashes if Gemini passes an outdated incident ID.
     return [{
       option: 'monitor',
       label: 'Monitor and Observe',
@@ -32,14 +81,19 @@ export function compareResponseOptions(incidentId, crowdState) {
     }];
   }
 
+  // #What — Retrieve the pre-approved playbook and current zone volunteer coverage.
   const playbook = getIncidentPlaybook(incident.type);
   const volunteers = getVolunteerAvailability(incident.zone);
   const zoneVolunteers = volunteers.zones.find((z) => z.zoneId === incident.zone);
+  
+  // #What — Check if the zone currently has adequate volunteer coverage.
   const hasVolunteers = zoneVolunteers && !zoneVolunteers.shortage;
 
   const options = [];
 
-  // Option 1: Full immediate response
+  // ── Option 1: Full immediate response ──────────────────────────────────────
+  // #Business-Intent — The default safety protocol: resolve the incident as quickly
+  //   as possible, highlighting if volunteer shortages might delay deployment.
   options.push({
     option: 'full-immediate',
     label: 'Full Immediate Response',
@@ -59,7 +113,9 @@ export function compareResponseOptions(incidentId, crowdState) {
     humanApprovalRequired: true,
   });
 
-  // Option 2: Staged response
+  // ── Option 2: Staged response ──────────────────────────────────────────────
+  // #Business-Intent — Recommended for lower-severity incidents to conserve venue
+  //   resources, with a trade-off of 8 minutes added to resolution time.
   options.push({
     option: 'staged-response',
     label: 'Staged Response',
@@ -74,12 +130,14 @@ export function compareResponseOptions(incidentId, crowdState) {
       'May be insufficient for rapidly-escalating incidents',
     ],
     resourceRequired: 'steward (assessment) then ' + playbook.requiredRoles[0],
-    estimatedResolutionMinutes: playbook.estimatedMinutes + 8,
+    estimatedResolutionMinutes: playbook.estimatedMinutes + 8, // #What — Adds an 8-minute assessment overhead penalty
     riskIfDelayed: incident.severity,
     humanApprovalRequired: true,
   });
 
-  // Option 3: Monitor and await escalation
+  // ── Option 3: Monitor and await escalation ────────────────────────────────
+  // #Business-Intent — Only allow this option if the incident is not critical.
+  //   Critical incidents must have active responses.
   if (incident.severity !== 'critical') {
     options.push({
       option: 'monitor',
