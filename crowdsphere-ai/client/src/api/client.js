@@ -55,7 +55,7 @@
 // #What — Absolute base URL for all backend API calls; must match the deployed server origin.
 // #Risk-Area — Hard-coding the production URL here means staging / local dev environments
 //              must rely on env-var injection or a build-time replace step.
-const BASE_URL = 'https://stadium-simulation.onrender.com/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 
 // #What — Default per-request timeout in milliseconds before the AbortController fires.
 // #Business-Intent — 30 s balances user patience against server LLM generation time for
