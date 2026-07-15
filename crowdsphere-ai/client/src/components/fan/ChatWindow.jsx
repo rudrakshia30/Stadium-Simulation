@@ -2,6 +2,7 @@
  * AI Chat Window component — full conversational interface.
  */
 import { useState, useRef, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../../api/client.js';
 import styles from './ChatWindow.module.css';
 
@@ -85,9 +86,28 @@ function Message({ msg }) {
   );
 }
 
+Message.propTypes = {
+  msg: PropTypes.shape({
+    role: PropTypes.string.isRequired,
+    content: PropTypes.string,
+    loading: PropTypes.bool,
+    response: PropTypes.shape({
+      warnings: PropTypes.arrayOf(PropTypes.string),
+      routeSummary: PropTypes.string,
+      estimatedMinutes: PropTypes.number,
+      distanceMeters: PropTypes.number,
+      accessibilityNotes: PropTypes.arrayOf(PropTypes.string),
+      requiresStaffAssistance: PropTypes.bool,
+      confidence: PropTypes.string,
+      snapshotVersion: PropTypes.string,
+      dataFreshness: PropTypes.string,
+    }),
+  }).isRequired,
+};
+
 let msgId = 0;
 
-export default function ChatWindow({ language, preferences, onRouteRequest }) {
+export default function ChatWindow({ language, preferences, onRouteRequest: _onRouteRequest }) {
   const [messages, setMessages] = useState([
     {
       id: ++msgId,
@@ -245,3 +265,9 @@ export default function ChatWindow({ language, preferences, onRouteRequest }) {
     </div>
   );
 }
+
+ChatWindow.propTypes = {
+  language: PropTypes.string.isRequired,
+  preferences: PropTypes.object.isRequired,
+  onRouteRequest: PropTypes.func.isRequired,
+};
