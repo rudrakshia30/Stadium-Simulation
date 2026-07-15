@@ -2,6 +2,7 @@
  * Scenario selector — lets ops staff load simulation scenarios.
  */
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../../api/client.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import styles from './OpsScenarios.module.css';
@@ -85,3 +86,10 @@ export default function OpsScenarios({ snapshot, onScenarioChange }) {
     </div>
   );
 }
+
+OpsScenarios.propTypes = {
+  snapshot: PropTypes.shape({
+    scenarioId: PropTypes.string,
+  }),
+  onScenarioChange: PropTypes.func.isRequired,
+};
