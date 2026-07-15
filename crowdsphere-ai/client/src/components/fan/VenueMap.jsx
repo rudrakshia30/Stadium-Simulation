@@ -3,6 +3,7 @@
  * Shows crowd density heat map and allows node selection for routing.
  */
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { api } from '../../api/client.js';
 import styles from './VenueMap.module.css';
 
@@ -41,13 +42,12 @@ const ICON_BY_TYPE = {
   elevator: '🛗', emergency_exit: '🚪', recycling: '♻',
 };
 
-export default function VenueMap({ venueData, preferences, onRouteRequest }) {
+export default function VenueMap({ venueData, preferences: _preferences, onRouteRequest }) {
   const [crowdData, setCrowdData] = useState(null);
   const [selectedFrom, setSelectedFrom] = useState(null);
   const [selectedTo, setSelectedTo] = useState(null);
   const [hoveredZone, setHoveredZone] = useState(null);
   const [facilityFilter, setFacilityFilter] = useState('all');
-  const [tooltip, setTooltip] = useState(null);
 
   useEffect(() => {
     api.opsSnapshot().catch(() => {}).then((data) => {
@@ -273,3 +273,15 @@ export default function VenueMap({ venueData, preferences, onRouteRequest }) {
     </div>
   );
 }
+
+VenueMap.propTypes = {
+  venueData: PropTypes.shape({
+    gates: PropTypes.arrayOf(PropTypes.object),
+    sections: PropTypes.arrayOf(PropTypes.object),
+    facilities: PropTypes.arrayOf(PropTypes.object),
+    transportPoints: PropTypes.arrayOf(PropTypes.object),
+    nodes: PropTypes.arrayOf(PropTypes.string),
+  }),
+  preferences: PropTypes.object,
+  onRouteRequest: PropTypes.func.isRequired,
+};
