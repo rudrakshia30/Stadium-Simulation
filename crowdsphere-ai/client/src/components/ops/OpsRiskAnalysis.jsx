@@ -1,6 +1,7 @@
 /**
  * Risk Analysis component — visualises zone risk scores with deterministic data.
  */
+import PropTypes from 'prop-types';
 import styles from './OpsRiskAnalysis.module.css';
 
 function RiskBar({ label, score, category }) {
@@ -21,6 +22,12 @@ function RiskBar({ label, score, category }) {
     </div>
   );
 }
+
+RiskBar.propTypes = {
+  label: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  category: PropTypes.string.isRequired,
+};
 
 export default function OpsRiskAnalysis({ snapshot }) {
   if (!snapshot) {
@@ -50,7 +57,6 @@ export default function OpsRiskAnalysis({ snapshot }) {
 
   const elevatorOutages = snapshot.elevatorOutages || [];
   const transportDisruptions = snapshot.transport?.filter((t) => t.status !== 'operational') || [];
-  const accessibilityIssues = zones.filter((z) => z.accessibilityObstruction);
 
   return (
     <div className={styles.page}>
@@ -176,3 +182,25 @@ export default function OpsRiskAnalysis({ snapshot }) {
     </div>
   );
 }
+
+OpsRiskAnalysis.propTypes = {
+  snapshot: PropTypes.shape({
+    metrics: PropTypes.shape({
+      overallRisk: PropTypes.string,
+      overallRiskScore: PropTypes.number,
+      highestRiskZone: PropTypes.string,
+      highRiskZoneCount: PropTypes.number,
+      stadiumOccupancyPct: PropTypes.number,
+      activeIncidentCount: PropTypes.number,
+      longestQueueMinutes: PropTypes.number,
+      transportDisruptions: PropTypes.number,
+      accessibilityDisruptions: PropTypes.number,
+      volunteerShortage: PropTypes.bool,
+    }),
+    crowd: PropTypes.shape({
+      zones: PropTypes.arrayOf(PropTypes.object),
+    }),
+    elevatorOutages: PropTypes.arrayOf(PropTypes.string),
+    transport: PropTypes.arrayOf(PropTypes.object),
+  }),
+};
